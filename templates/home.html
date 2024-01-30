@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #007bff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .home-container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #007bff;
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: #555;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004380;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+
+    .btn-danger:hover {
+        background-color: #bd2130;
+        border-color: #c82333;
+    }
+</style>
+
+<div class="home-container">
+    <h1>Welcome to the Home Page</h1>
+    <p>Choose your role or register a new user:</p>
+    <a href="{{ url_for('login', role='user') }}" class="btn btn-primary">User Login</a>
+    <a href="{{ url_for('login', role='admin') }}" class="btn btn-danger">Admin Login</a>
+</div>
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto my-8 p-8 bg-gray-100 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-semibold mb-4 text-center">Feedback Form</h1>
+        <p class="text-lg">We'd love to hear your thoughts on the book!</p>
+
+        <form method="post" action="{{ url_for('feedback', book_id=book_id) }}" class="mt-4">
+            <div class="mb-4">
+                <label for="feedback" class="block text-sm font-medium text-gray-700">Your Feedback:</label>
+                <textarea class="form-input mt-1 block w-full border rounded-md shadow-sm" id="feedback" name="feedback" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="rating" class="block text-sm font-medium text-gray-700">Rate the Book:</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+                </div>
+            </div>
+
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-4">Submit Feedback</button>
+            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded-md" name="clear">Clear</button>
+        </form>
+        <a href="{{ url_for('read_book', book_id=book_id) }}" class="bg-gray-500 text-white px-4 py-2 rounded-md mt-3 inline-block">Back to Book</a>
+    </div>
+    <style>
+        .rating {
+            display: inline-block;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            background-image: url('/static/images/430117_star_icon.png');
+            background-size: cover;
+        }
+
+        .rating input:checked ~ label {
+            background-image: url('/static/images/clipart4342924.png');
+        }
+    </style>
+{% endblock %}

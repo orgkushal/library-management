@@ -1,0 +1,197 @@
+body {
+    margin: 20px;
+}
+/* Add this CSS to make buttons more stylish
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-success {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #218838;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+} */
+/* Add this to your stylesheet or within style tags in your HTML file */
+
+.btn-primary,
+.btn-success {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px 10px 0;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background-color: #0056b3;
+}
+
+/* custom.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.bg-gradient-to-r {
+    background: linear-gradient(to right, #6B46C1, #6366F1);
+}
+
+.text-yellow-300 {
+    color: #FBBF24;
+}
+
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-logout {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4F46E5;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #22C55E;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #EF4444;
+    color: #fff;
+}
+
+.btn-logout {
+    color: #fff;
+    background-color: #4a5568;
+    border: 1px solid #4a5568;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: fixed;
+    top: 15px;
+    right: 6px;
+}
+
+
+
+.btn-primary:hover {
+    background-color: #4338CA;
+    filter: brightness(1.2);
+}
+
+.btn-danger:hover {
+    background-color: #DC2626;
+    filter: brightness(1.2);
+}
+
+.btn-logout:hover {
+    color: #EF4444;
+    filter: brightness(1.2);
+}
+.grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.book-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+.bg-white {
+    background-color: #fff;
+}
+
+.text-gray-700 {
+    color: #4B5563;
+}
+.book-item:hover {
+    transform: translateY(-5px);
+}
+
+
+.buttons-container {
+    margin-top: 20px;
+}
+
+/* .alert {
+    margin-top: 20px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+} */

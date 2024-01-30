@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Read Book{% endblock %}
+
+{% block content %}
+    <div class="container text-center ">
+        <h1 class="text-4xl font-extrabold mb-4 book-title text-black-300">{{ book.title }} by <span class="text-black-300">{{ book.author }}</span></h1>
+        <div class="mb-8">
+            <p class="text-lg book-container ">{{ book.content }}</p>
+        </div>
+        <a href="{{ url_for('dashboard_user') }}" class="btn-primary mr-2">Back to My Books</a>
+        <a href="{{ url_for('feedback', book_id=book.id) }}" class="btn-secondary">Leave Feedback</a>
+    </div>
+
+    <style>
+        body {
+            background-image: url('/static/images/pexels-pixabay-235985.jpg');
+            background-color: #13024f;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .book-title{
+            margin-top: 100px;
+        }
+        .book-container {       
+            background-size: cover;
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #000000;
+            padding: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            margin-top: 100px;
+            margin-bottom: 150px;
+            align-items: center;
+            justify-content: center;
+            max-width: 80%;
+        }
+
+        .btn-primary {
+            background-color: #3490dc;
+            color: #fff;
+            padding: 10px 20px;
+            margin-bottom: 50px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #276493;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            margin-bottom: 50px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Available Books{% endblock %}
+
+{% block content %}
+<style>
+        .container {
+        text-align: center;
+    }
+
+    h1.mb-4 {
+        color: #3016c1; /* Green color */
+        font-weight: bold;
+        font-family: 'Arial', sans-serif; /* Change the font family as needed */
+        font-size: 2.5em;
+    }
+    .modal-body p {
+        margin-bottom: 20px;
+    }
+    .leftmost-text {
+    text-align: left;
+    }
+</style>
+<div class="relative ">
+    <form method="POST" action="{{ url_for('search_books') }}" class="flex justify-end mb-4">
+        <input type="text" name = "term" placeholder="Search books..." class="border p-2 mt-2 rounded-md">
+        <button type="submit" class="right-0 top-0 mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Search</button>
+    </form>
+    
+</div>
+<div class="container mt-4">
+    <h1 class="mb-4">Available Books</h1>
+
+    {% if books %}
+        <ul class="list-group">
+            {% for book in books %}
+                <li class="list-group-item d-flex justify-content-between align-items-centre">
+                    <div>
+                        <h5 class="mb-1">{{ book.title }} <small>by {{ book.author }}</small></h5>
+                        {% if accepted_requests %}
+                            {% for request in accepted_requests %}
+                                {% if request.book_id == book.id %}
+                                    <p class="text-muted leftmost-text">Allocated to: {{ request.user.username }}</p>
+                                    <p class="text-muted">     </p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Book Actions">
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#editModal{{ book.id }}">
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#removeModal{{ book.id }}">
+                            Remove
+                        </button>
+                        <!-- Add the modal for removing each book -->
+                        <div class="modal fade" id="removeModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="removeModalLabel"><i class="fas fa-trash"></i> Remove Book</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to remove "{{ book.title }}" by {{ book.author }}?</p>
+                                        <form method="POST" action="{{ url_for('remove_book', book_id=book.id) }}">
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Remove Book</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End remove modal -->
+                        <!-- Add the modal for editing each book -->
+                        <div class="modal fade" id="editModal{{ book.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel"><i class="fas fa-edit"></i> Edit Book</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Add the form fields to edit the book details -->
+                                        <form method="POST" action="{{ url_for('edit_book', book_id=book.id) }}">
+                                            <div class="form-group">
+                                                <label for="edit_title">Title:</label>
+                                                <input type="text" class="form-control" id="edit_title" name="edit_title" value="{{ book.title }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_author">Author:</label>
+                                                <input type="text" class="form-control" id="edit_author" name="edit_author" value="{{ book.author }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_genre">Genre:</label>
+                                                <select name="edit_genre" class="form-control" required>
+                                                    {% for genre in genres %}
+                                                        <option value="{{ genre.id }}" {% if genre.id == book.genre.id %}selected{% endif %}>{{ genre.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_content">Content:</label>
+                                                <textarea class="form-control" id="edit_content" name="edit_content" rows="4" required>{{ book.content }}</textarea>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End edit modal -->
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books available.</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard_admin') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 inline-block">Back to Admin Dashboard</a>
+{% endblock %}

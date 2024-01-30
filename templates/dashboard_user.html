@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .alert {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .leftmost-text {
+    text-align: left;
+    }
+</style>
+    <div class="container my-8 p-8 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg shadow-lg text-center">
+        <h1 class="text-4xl font-extrabold mb-4">Welcome, <span class="text-yellow-300">{{ username }}</span> !</h1>
+        <p class="text-lg mb-8">Explore your personalized User Dashboard.</p>
+
+        <a href="{{ url_for('request_books') }}" class="btn-primary">Request Books</a>
+    </div>
+
+    <div class="container mx-auto text-center">
+        {% if accepted_books %}
+            <h2 class="text-3xl font-semibold mb-6 text-purple-600">My Books</h2>
+            <ul class="list-inside list-disc text-lg">
+                {% for book, days_since_issue in accepted_books %}
+                    <li class="mb-4 book-item">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="mb-2"><span class="book-title">{{ book.title }}</span> by <span class="font-semibold">{{ book.author }}</span></p>
+                                <p class="text-sm text-gray-600 leftmost-text">Days Since Issue: {{ days_since_issue }}</p>
+                                <p class="text-gray-700 leftmost-text">Issued on: {{ convert_to_ist(book.requests__books_relationship[0].issue_date).strftime('%d-%m-%Y %H:%M') }}</p>
+                                
+                            </div>
+                            <div>
+                                {% for request in book.requests__books_relationship %}
+                                    <form method="post" action="{{ url_for('return_book', request_id=request.id) }}" class="inline mr-2">
+                                        <button type="submit" class="btn btn-danger">Return</button>
+                                    </form>
+                                    <a href="{{ url_for('read_book', book_id=book.id) }}" class="btn btn-primary inline mr-2">Read</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-lg text-gray-500">No accepted books found.</p>
+        {% endif %}
+    </div>
+
+    <div class="buttons-container">
+        <!-- <a href="{{ url_for('home') }}" class="btn-primary mt-8 inline-block">Back to Home</a> -->
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+    </div>
+{% endblock %}

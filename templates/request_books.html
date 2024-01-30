@@ -1,0 +1,80 @@
+<!-- request_books.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Request Books{% endblock %}
+
+{% block content %}
+<style>
+    .alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 400px;
+        width: 100%;
+        padding: 15px;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #721c24;
+    }
+</style>
+    <div class="relative">
+        <form method="POST" action="{{ url_for('search_books') }}" class="flex justify-end mb-4">
+            <input type="text" name="term" placeholder="Search books..." class="border p-2 mt-2 mr-2 rounded-md">
+            <button type="submit" class="right-0 top-0 mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Search</button>
+        </form>
+        <form method="POST" action="{{ url_for('request_books') }}" class="flex items-center justify-end mb-4">
+            <label for="genre" class="mr-2">Filter by Genre:</label>
+            <div class="relative inline-block">
+                <select name="genre" id="genre" class="appearance-none border border-gray-400 px-4 py-2 rounded-md focus:outline-none">
+                    <option value="">All Genres</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre.id }}">{{ genre.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">Filter</button>
+        </form>
+        
+    </div>
+    <div class="container mx-auto my-8 p-8 bg-gray-100 rounded-lg shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-3xl font-semibold">Available Books</h1>
+            {% if genre %}
+                <span class="text-sm text-gray-500">Filtered by Genre: {{ genre.name }}</span>
+            {% endif %}
+        </div>
+        {% if incorrect %}
+            <div class="alert" id="incorrect-alert">
+                Maximum number of books issued !
+            </div>
+        {% endif %}
+
+        {% if books %}
+            <ul class="list-none">
+                {% for book in books %}
+                    <li class="border-b py-2 flex items-center justify-between">
+                        <span>{{ book.title }} by {{ book.author }}</span>
+                        <div class="flex items-center">
+                            {% if book.id in allocated_books %}
+                                <p class="text-red-500">Already Allocated</p>
+                            {% else %}
+                                <form method="POST" action="{{ url_for('request_book', book_id=book.id) }}">
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Request</button>
+                                </form>
+                            {% endif %}
+                            <a href="{{ url_for('view_feedback', book_id=book.id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md ml-4">View Feedback</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No available books at the moment.</p>
+        {% endif %}
+    </div>
+    <a href="{{ url_for('dashboard_user') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 inline-block">Back to Dashboard</a>
+{% endblock %}
